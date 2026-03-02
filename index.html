@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message Cards...<3 </title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #fdbbf7, #f1deef);
+            font-family: Arial, sans-serif;
+            perspective: 1600px;
+            overflow: hidden;
+        }
+
+        .scene {
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            cursor: grab;
+        }
+
+        .cylinder {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            transform-style: preserve-3d;
+        }
+
+        .card {
+            position: absolute;
+            width: 180px;
+            height: 260px;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: opacity 0.3s ease;
+            backface-visibility: visible;
+            opacity: 0.3;
+            text-align: center;
+        }
+
+        .title {
+            font-weight: lighter;
+            font-size: 15px;
+        }
+
+        .message {
+            font-size: 13px;
+            min-height: 80px;
+        }
+
+        button {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            background: rgba(255,255,255,0.6);
+            font-weight: bold;
+        }
+
+        /* Position cards around cylinder */
+        .card:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
+        .card:nth-child(2) { transform: rotateY(60deg) translateZ(250px); }
+        .card:nth-child(3) { transform: rotateY(120deg) translateZ(250px); }
+        .card:nth-child(4) { transform: rotateY(180deg) translateZ(250px); }
+        .card:nth-child(5) { transform: rotateY(240deg) translateZ(250px); }
+        .card:nth-child(6) { transform: rotateY(300deg) translateZ(250px); }
+
+    </style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+    <div class="cylinder" id="cylinder">
+
+        <div class="card" data-text="Kyaa Huaa mere guyzz ko??..Dekho agr mnn me rkhoge to ghutan hone lgegi...agr muje nhi btaoge to fir kisko btaoge..M hmesha aapke liye yaha hoon jb bhi aapko need ho😊..Please never be afraid to talk about ur problem..you won't overshare or annoy me. I will always listen to u. ">
+            <div class="title">Open when your mood is off</div>
+            <div class="message"></div>
+            <button>Open</button>
+        </div>
+
+        <div class="card" data-text="Suno Sakhii💮...aapke chehre pr sirf nischhal muskan hi achii lgti h...isiliye hmesha muskurate raha kro..Aur itna sunder chehra bhagwaan ne rone ke liye thodi diya h..Chlo ab hss ke dikhao😊">
+            <div class="title">Open when you are crying</div>
+            <div class="message"></div>
+            <button>Open</button>
+        </div>
+
+        <div class="card" data-text="Chlo aaj aapko ek secret btata hu..Yrr muje na aapse baate krna, apna sb kuch share krna Bohttt achaa lgta h😁...isiliye aapka udaas hona mujse sehen nhi hota..Aur jb aap reason share nhi krte tb to kyaa hi btau🥴..Yrr dekho aapka dukh = mera dukh..Aur share krne se hi to solution niklta h na aur agr solution na bhi nikle mnn to halka ho hi jaayega">
+            <div class="title">Open when you are sad</div>
+            <div class="message"></div>
+            <button>Open</button>
+        </div>
+
+        <div class="card" data-text="Yrr Dekho NEET ki tyyari aasan nhi h..boht se up and downs aate h..but aise haar maan lene se thodi kaam chlega..aapko meri kahani to pta hi h yrr aap to mere se boht better ho..Koi sub nhi horha to usko baad me kiya kro fresh mind se..aur m hu na aapko guide krne ke liye..aap bss padhai kro baaki faaltu ki tnsn mere upr chhod do...chlo jao abhi pdhne baitho">
+            <div class="title">Open when you need motivation</div>
+            <div class="message"></div>
+            <button>Open</button>
+        </div>
+
+        <div class="card" data-text="Dekho guyzz aap khud ko kbhi akela mt smjhna...aisi kyi baate hoti h jo aap ghrwalo se yaa kisi aur se nhi kr skte...Aap wo cheeze mujhse share kr skte ho...aise hi aap bhi mere liye whi insaan ho who listen to me without judging me..and m bhi aapko kbhi judge nhi kruga...u can tell me anything without any hesitation😊🥰">
+            <div class="title">Open when you feel alone</div>
+            <div class="message"></div>
+            <button>Open</button>
+        </div>
+
+        <div class="card" data-text="Muje iss baare me itna pta to nhi h...lekin jaise bhi aapka mood ho...chahe aapko gussa aaye yaa aap sad ho yaa jaise bhi ho...aap mere upr utaar dena without hesitation...i know inn dino aapko boht problems hoti h...jitna ho ske rest kro...and if u need to at any time even at 4 am or 5 am..i am here for u always mere guyzz😁">
+            <div class="title">Open when you ur days</div>
+            <div class="message"></div>
+            <button>Open</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const scene = document.getElementById("scene");
+    const cylinder = document.getElementById("cylinder");
+    const cards = document.querySelectorAll(".card");
+
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let rotX = 0;
+    let rotY = 0;
+
+    const totalCards = cards.length;
+    const anglePerCard = 360 / totalCards;
+
+    function updateOpacity() {
+        cards.forEach((card, index) => {
+            let cardAngle = index * anglePerCard;
+            let relativeAngle = (cardAngle + rotY) % 360;
+            if (relativeAngle < 0) relativeAngle += 360;
+
+            let distanceFromFront = Math.min(
+                Math.abs(relativeAngle),
+                Math.abs(360 - relativeAngle)
+            );
+
+            let opacity = 1 - (distanceFromFront / 180);
+            opacity = Math.max(0.2, opacity);
+            card.style.opacity = opacity;
+        });
+    }
+
+    function autoRotate() {
+        if (!isDragging) {
+            rotY += 0.05; // very slow rotation
+            cylinder.style.transform = `
+                rotateX(${rotX}deg)
+                rotateY(${rotY}deg)
+            `;
+            updateOpacity();
+        }
+        requestAnimationFrame(autoRotate);
+    }
+
+    autoRotate();
+
+    scene.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        scene.style.cursor = "grabbing";
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+
+        let deltaX = e.clientX - startX;
+        let deltaY = e.clientY - startY;
+
+        cylinder.style.transform = `
+            rotateX(${rotX - deltaY * 0.5}deg)
+            rotateY(${rotY + deltaX * 0.5}deg)
+        `;
+    });
+
+    document.addEventListener("mouseup", (e) => {
+        if (!isDragging) return;
+
+        let deltaX = e.clientX - startX;
+        let deltaY = e.clientY - startY;
+
+        rotY += deltaX * 0.5;
+        rotX -= deltaY * 0.5;
+
+        isDragging = false;
+        scene.style.cursor = "grab";
+    });
+
+    function typeWriter(element, text, speed = 20) {
+        element.textContent = "";
+        let i = 0;
+        const interval = setInterval(() => {
+            element.textContent += text.charAt(i);
+            i++;
+            if (i >= text.length) clearInterval(interval);
+        }, speed);
+    }
+
+    cards.forEach(card => {
+        const button = card.querySelector("button");
+        const messageDiv = card.querySelector(".message");
+        const text = card.getAttribute("data-text");
+
+        button.addEventListener("click", (e) => {
+            e.stopPropagation();
+            typeWriter(messageDiv, text);
+        });
+    });
+
+    updateOpacity();
+</script>
+
+</body>
+</html>
