@@ -49,6 +49,28 @@
             text-align: center;
         }
 
+        .controls {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.controls button {
+    padding: 10px 18px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.7);
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.controls button:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
         .title {
             font-weight: lighter;
             font-size: 15px;
@@ -114,12 +136,16 @@
         </div>
 
         <div class="card" data-text="Muje iss baare me itna pta to nhi h...lekin jaise bhi aapka mood ho...chahe aapko gussa aaye yaa aap sad ho yaa jaise bhi ho...aap mere upr utaar dena without hesitation...i know inn dino aapko boht problems hoti h...jitna ho ske rest kro and need pde to dwai bhi le lena...and if u need to at any time even at 4 am or 5 am..i am here for u always mere guyzz😁">
-            <div class="title">Open when you ur days</div>
+            <div class="title">Open when you ur on ur days</div>
             <div class="message"></div>
             <button>Open</button>
         </div>
 
     </div>
+</div>
+<div class="controls">
+    <button id="prev">⏪</button>
+    <button id="next">⏩</button>
 </div>
 
 <script>
@@ -221,6 +247,31 @@
     });
 
     updateOpacity();
+    const nextBtn = document.getElementById("next");
+const prevBtn = document.getElementById("prev");
+
+let currentIndex = 0;
+
+function rotateToIndex(index) {
+    rotY = -index * anglePerCard;
+
+    cylinder.style.transform = `
+        rotateX(${rotX}deg)
+        rotateY(${rotY}deg)
+    `;
+
+    updateCards();
+}
+
+nextBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % totalCards;
+    rotateToIndex(currentIndex);
+});
+
+prevBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+    rotateToIndex(currentIndex);
+});
 </script>
 
 </body>
